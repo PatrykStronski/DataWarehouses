@@ -31,3 +31,15 @@ CREATE VIEW Details
 AS SELECT *
 FROM BasicSales bs INNER JOIN ProductDetails pd ON bs.ProductID = pd.ProductIDDetails
 INNER JOIN CustomerDetails cd ON cd.BusinessEntityID = bs.CustomerID;
+
+CREATE VIEW Details2
+AS SELECT 
+ProductID, 
+CustomerID,
+CAST(CAST(OrderYear AS VARCHAR)+'-'+CAST(OrderMonth AS VARCHAR)+'-'+CAST(OrderDay AS VARCHAR) AS DATETIME) AS "OrderDate", 
+TotalDue, 
+OrderQty,
+BusinessEntityID, FirstName, MiddleName, LastName, PersonType, 
+ProductName, Model, SubCategory, ListPrice, Color, Weight, SizeUnitMeasureCode, WeightUnitMeasureCode
+FROM BasicSales bs INNER JOIN ProductDetails pd ON bs.ProductID = pd.ProductIDDetails
+INNER JOIN CustomerDetails cd ON cd.BusinessEntityID = bs.CustomerID;
