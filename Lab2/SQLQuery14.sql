@@ -11,10 +11,10 @@ GROUP BY  p.FirstName+' '+p.LastName
 HAVING sum(h.SubTotal)>1500
 ORDER BY SUM(h.SubTotal) DESC
 --TASK 1-3a
-SELECT UnitPrice / OrderQty as 'AVERAGE PRICE',AVG(OrderQty) as 'SALES AMOUNT',sum(LineTotal) AS 'VOLUME'
-FROM Sales.SalesOrderDetail
-GROUP BY ProductID,UnitPrice,OrderQty
-ORDER BY ProductID
+SELECT UnitPrice / OrderQty as 'AVERAGE PRICE',AVG(OrderQty) as 'SALES AMOUNT',sum(LineTotal) AS 'VOLUME', pp.Name
+FROM Sales.SalesOrderDetail sod INNER JOIN Production.Product pp ON sod.ProductID = pp.ProductID
+GROUP BY pp.ProductID,UnitPrice,OrderQty, pp.Name
+ORDER BY pp.ProductID
 --TASK 1-4d
 select Name,Color
 from Production.Product

@@ -41,5 +41,5 @@ TotalDue,
 OrderQty,
 BusinessEntityID, FirstName, MiddleName, LastName, PersonType, 
 ProductName, Model, SubCategory, ListPrice, Color, Weight, SizeUnitMeasureCode, WeightUnitMeasureCode
-FROM BasicSales bs INNER JOIN ProductDetails pd ON bs.ProductID = pd.ProductIDDetails
-INNER JOIN CustomerDetails cd ON cd.BusinessEntityID = bs.CustomerID;
+FROM AdventureWorks2014.dbo.BasicSales bs INNER JOIN AdventureWorks2014.dbo.ProductDetails pd ON bs.ProductID = pd.ProductIDDetails
+INNER JOIN AdventureWorks2014.dbo.CustomerDetails cd ON cd.BusinessEntityID = bs.CustomerID;
