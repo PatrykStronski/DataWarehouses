@@ -12,7 +12,6 @@ SET LANGUAGE US_ENGLISH;
 DECLARE @CutoffDate DATE = DATEADD(YEAR, @NumberOfYears, @StartDate);
 
 -- this is just a holding table for intermediate calculations:
-
 CREATE TABLE dimDate
 (
   [date]       DATE PRIMARY KEY, 
