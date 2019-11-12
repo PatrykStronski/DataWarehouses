@@ -4,7 +4,7 @@
 --v.Calculated information -IsPurchasedAtleastOnce, IsManufacturedvi.Surrogate key that uniquely identifies a row within DimProduct
 USE AdventureWorks2014;
 
-SELECT pp.ProductID, pp.Name, COUNT(ppod.ProductID), SUM(COALESCE(ppi.Quantity,0)), pps.Name, ppc.Name, pp.ListPrice, pp.Color, pp.ProductLine, pp.Class, pp.Weight, pp.WeightUnitMeasureCode, pp.Size, pp.SizeUnitMeasureCode FROM Production.Product pp
+SELECT pp.ProductID, pp.Name, COUNT(ppod.ProductID), SUM(COALESCE(ppi.Quantity,0)), pps.Name, ppc.Name, pp.ListPrice, pp.Color, pp.ProductLine, pp.Class, pp.Weight, pp.WeightUnitMeasureCode, pp.Size FROM Production.Product pp
 INNER JOIN Production.ProductInventory ppi ON ppi.ProductID = pp.ProductID
 INNER JOIN Purchasing.PurchaseOrderDetail ppod ON ppod.ProductID = pp.ProductID
 INNER JOIN Production.ProductSubcategory pps ON pps.ProductSubcategoryID = pp.ProductSubcategoryID
@@ -26,7 +26,6 @@ CREATE TABLE dimProduct(
 	[weight] FLOAT,
 	[weightUnit] VARCHAR(10),
 	[size] VARCHAR(10),
-	[sizeUnit] VARCHAR(10),
 	isPurchased AS
 	CASE
 		WHEN numberSold > 0 THEN 1
@@ -39,8 +38,8 @@ CREATE TABLE dimProduct(
 	END,
 );
 
-INSERT INTO dimProduct (productId, name, numberSold, numberInStock, subcategory, category, listPrice, color, productLine, class, weight, weightUnit, size, sizeUnit)
-SELECT pp.ProductID, pp.Name, COUNT(ppod.ProductID), SUM(COALESCE(ppi.Quantity,0)), pps.Name, ppc.Name, pp.ListPrice, pp.Color, pp.ProductLine, pp.Class, pp.Weight, pp.WeightUnitMeasureCode, pp.Size, pp.SizeUnitMeasureCode FROM Production.Product pp
+INSERT INTO dimProduct (productId, name, numberSold, numberInStock, subcategory, category, listPrice, color, productLine, class, weight, weightUnit, size)
+SELECT pp.ProductID, pp.Name, COUNT(ppod.ProductID), SUM(COALESCE(ppi.Quantity,0)), pps.Name, ppc.Name, pp.ListPrice, pp.Color, pp.ProductLine, pp.Class, pp.Weight, pp.WeightUnitMeasureCode, pp.Size FROM Production.Product pp
 INNER JOIN Production.ProductInventory ppi ON ppi.ProductID = pp.ProductID
 INNER JOIN Purchasing.PurchaseOrderDetail ppod ON ppod.ProductID = pp.ProductID
 INNER JOIN Production.ProductSubcategory pps ON pps.ProductSubcategoryID = pp.ProductSubcategoryID
