@@ -11,3 +11,8 @@ CREATE TABLE DIMProductRatio(
 	[RMonth] AS MONTH(RDate), 
 	[RDay] AS DAY(RDate)
 );
+
+INSERT INTO DIMProductRatio(ProductID,Rating,City,Continent,Gender,RDate) SELECT 
+"PID", "Rating", "Country", r.Continent, "gender", Cast("date" as datetime) 
+FROM "data-l4-rating" r
+INNER JOIN "data-l4-continent" c ON c.ContinentId = r.Continent;
