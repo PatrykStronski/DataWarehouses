@@ -45,3 +45,5 @@ INNER JOIN Purchasing.PurchaseOrderDetail ppod ON ppod.ProductID = pp.ProductID
 INNER JOIN Production.ProductSubcategory pps ON pps.ProductSubcategoryID = pp.ProductSubcategoryID
 INNER JOIN Production.ProductCategory ppc ON ppc.ProductCategoryID = pps.ProductCategoryID
 GROUP BY pp.ProductID, pp.Name, pps.Name, pp.ListPrice, pp.Color, pp.ProductLine, pp.Class, pp.Weight, pp.WeightUnitMeasureCode,pp.Size, pp.SizeUnitMeasureCode,ppc.Name;
+
+SELECT * FROM dimProduct;

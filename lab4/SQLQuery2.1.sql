@@ -31,7 +31,7 @@ CREATE TABLE dimDate
   [quarter]    AS DATEPART(QUARTER,  [date]),
   [year]       AS DATEPART(YEAR,     [date]),
   FirstOfYear  AS CONVERT(DATE, DATEADD(YEAR,  DATEDIFF(YEAR,  0, [date]), 0)),
-  DateID     AS CONVERT(VARCHAR,[date], 105) + 'EUSTYLE',
+  DateID     AS(CONVERT(VARCHAR,[date], 101))  ,
   Style101     AS CONVERT(CHAR(10),  [date], 101)
 );
 INSERT dimDate([date]) 

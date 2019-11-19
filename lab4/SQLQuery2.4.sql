@@ -8,10 +8,11 @@ SELECT ssoh.SalesOrderID, ssod.SalesOrderDetailID, ssod.ProductID, ssoh.OrderDat
 FROM Sales.SalesOrderHeader ssoh
 INNER JOIN Sales.SalesOrderDetail ssod ON ssod.SalesOrderID = ssoh.SalesOrderID;
 
-DROP TABLE DIMTransaction;
-CREATE TABLE DIMTransaction(
+DROP TABLE FTransaction;
+CREATE TABLE FTransaction(
 	ID INTEGER PRIMARY KEY IDENTITY(1,1),
 	TransactionID INTEGER NOT NULL,
+	CustomerID INTEGER NOT NULL,
 	TransactionDetailID INTEGER NOT NULL,
 	ProductID INTEGER NOT NULL,
 	OrderDate DATE,
@@ -21,11 +22,13 @@ CREATE TABLE DIMTransaction(
 	OrderQty INTEGER,
 	TotalDue Money,
 	UnitPriceDiscount FLOAT,
-	TotalDiscount FLOAT
+	TotalDiscount FLOAT,
+	CONSTRAINT cid_fk FOREIGN KEY(CustomerID) REFERENCES Sales.Customer(CustomerID)
 );
-
-INSERT INTO DIMTransaction(
+--- FACT
+INSERT INTO FTransaction(
 	TransactionID,
+	CustomerID,
 	TransactionDetailID,
 	ProductID,
 	OrderDate,
@@ -36,8 +39,8 @@ INSERT INTO DIMTransaction(
 	TotalDue,
 	UnitPriceDiscount,
 	TotalDiscount)
-SELECT ssoh.SalesOrderID, ssod.SalesOrderDetailID, ssod.ProductID, ssoh.OrderDate, ssoh.DueDate, ssoh.ShipDate, ssod.UnitPrice, ssod.OrderQty, ssoh.TotalDue, ssod.UnitPriceDiscount, ssod.UnitPriceDiscount * ssod.OrderQty
+SELECT ssoh.SalesOrderID, CustomerID ,ssod.SalesOrderDetailID, ssod.ProductID, ssoh.OrderDate, ssoh.DueDate, ssoh.ShipDate, ssod.UnitPrice, ssod.OrderQty, ssoh.TotalDue, ssod.UnitPriceDiscount, ssod.UnitPriceDiscount * ssod.OrderQty
 FROM Sales.SalesOrderHeader ssoh
 INNER JOIN Sales.SalesOrderDetail ssod ON ssod.SalesOrderID = ssoh.SalesOrderID;
 
-SELECT * FROM DIMTransaction;
+SELECT * FROM FTransaction;
